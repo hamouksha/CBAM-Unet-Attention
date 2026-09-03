@@ -10,7 +10,7 @@ Experiments on a **human clothing segmentation dataset** (59 classes, 1000 image
 
 ---
 
-## 📘 1. Introduction
+## Introduction
 
 Semantic segmentation classifies each pixel into relevant classes (e.g., road, car, pedestrian). The **U-Net** architecture revolutionized this domain with its encoder–decoder structure, later influencing models like **SegNet**, **DeepLabv3+**, and **SegFormer**.
 
@@ -20,7 +20,7 @@ This work explores:
 
 ---
 
-## 🔍 2. Related Work
+## Related Work
 
 ### 2.1 U-Net Architecture
 
@@ -52,16 +52,23 @@ Copy code
 
 ---
 
-## 🧩 3. Methodology
+## Methodology
 
 ### 3.1 Dataset
 
-- Dataset: **Clothing Co-Parsing** (CVPR 2014)  
+##### Dataset 1 
+- Dataset: **Clothing Co-Parsing** (CVPR 2014)  [link](https://www.kaggle.com/datasets/balraj98/clothing-coparsing-dataset)
 - 1000 annotated images  
 - 59 labels (styles, accessories, poses)
 
+##### Dataset 2 
+- Dataset: **breast-cancer-semantic-segmentation-bcss** [link](https://www.kaggle.com/datasets/whats2000/breast-cancer-semantic-segmentation-bcss/code)
+- over 20000 annoted images
+- 22 lables (skin, tumor, organ, etc..)
+
 ### 3.2 Model and Algorithms
 
+**NOTE : this setup was used to conduct the experiments on Dataset 1**
 - **Loss Function:** Generalized Dice Loss (GDL), effective for unbalanced data.  
 - Compared with **Weighted Cross-Entropy (WCE)**.  
 - **Optimizer:** Adam  
@@ -69,6 +76,16 @@ Copy code
 - **Batch size:** 16  
 - **Input size:** 640×360  
 - **Training:** 50 epochs, early stopping with patience = 5  
+
+** NOTE : this setup was used to conduct the experiments on Dataset 2**
+
+- **Loss Function:** Generalized Dice Loss (GDL), effective for unbalanced data.  
+- Compared with **Weighted Cross-Entropy (WCE)**.  
+- **Optimizer:** Adam  
+- **Learning rate:** 9×10⁻⁴  
+- **Batch size:** 64
+- **Input size:** 224x224 (the size of the dataset)  
+- **Training:** 30 epochs, early stopping with patience = 5  
 
 ### 3.3 Experimental Design
 
@@ -80,11 +97,22 @@ Five U-Net variants were created:
 4. Residual U-Net + CBAM  
 5. Dropout U-Net + CBAM  
 
+** NOTE : for the Dataset 2 the just we conducted the classic U-net , U-net + CBAM setup** 
+
+---
+## Results
+#### Dataset 1 
+
+
+#### Dataset 2 
+Both U-Net and U-Net + CBAM showed steady improvements during training, with decreasing loss and increasing PA and IoU. U-Net achieved a validation IoU of 60.07% after 30 epochs, while U-Net + CBAM reached a best validation IoU of 59.72% at epoch 17. Although U-Net + CBAM achieved a slightly higher training IoU (62.46% vs. 61.30%), U-Net showed more stable validation performance. Overall, U-Net performed slightly better on the available validation results, although U-Net + CBAM requires further training for a fair comparison.
+
+[noraml U-net](./assets/U-net_results.png)
 
 ---
 
-## 🧾 5. Conclusion and Future Work
-
+## Conclusion and Future Work
+#### For Dataset 1 conducted experiments 
 - CBAM modules slightly improve segmentation performance.  
 - The attention mechanism enhances feature focus, with stronger benefits in deeper architectures.  
 - Future directions:
@@ -94,9 +122,11 @@ Five U-Net variants were created:
 **Findings:**
 - CBAM-augmented and residual models outperform baseline U-Net.
 - Best results achieved by **Residual U-Net with CBAM**, showing improved IoU and lower loss.
+
+#### for Dataset 2 conducted experiments 
 ---
 
-## 📚 References
+## References
 
 1. Badrinarayanan et al., *SegNet: A Deep Convolutional Encoder-Decoder Architecture for Image Segmentation*, 2016.  
 3. He et al., *Deep Residual Learning for Image Recognition*, CVPR 2016.  
@@ -104,8 +134,6 @@ Five U-Net variants were created:
 5. Sudre et al., *Generalised Dice Overlap as a Deep Learning Loss Function for Highly Unbalanced Segmentations*, 2017.  
 6. Woo et al., *CBAM: Convolutional Block Attention Module*, 2018.  
 8. Yang et al., *Clothing Co-Parsing by Joint Image Segmentation and Labeling*, CVPR 2014.
-
-
 
 
 ***(more details in the paper)***
