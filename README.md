@@ -1,4 +1,4 @@
-## 🧠 Abstract
+## Abstract
 
 Semantic segmentation assigns class labels to each pixel of an image, essential for tasks like autonomous driving, medical imaging, and robotics. While **U-Net** and similar encoder–decoder architectures perform well, they struggle with capturing fine spatial and contextual dependencies in complex scenes.
 
@@ -109,7 +109,7 @@ Both U-Net and U-Net + CBAM showed steady improvements during training, with dec
 
 ![normal U-net](./assets/U-net_results.png) 
 
-![normal U-net iou](./assets/normal U-net_iou.png)
+![normal U-net iou](./assets/normal_U-net_iou.png)
 
 ![normal U-net](./assets/U-net+CBAM.png)
 
