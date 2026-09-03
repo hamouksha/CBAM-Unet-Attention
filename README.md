@@ -107,11 +107,11 @@ Five U-Net variants were created:
 #### Dataset 2 
 Both U-Net and U-Net + CBAM showed steady improvements during training, with decreasing loss and increasing PA and IoU. U-Net achieved a validation IoU of 60.07% after 30 epochs, while U-Net + CBAM reached a best validation IoU of 59.72% at epoch 17. Although U-Net + CBAM achieved a slightly higher training IoU (62.46% vs. 61.30%), U-Net showed more stable validation performance. Overall, U-Net performed slightly better on the available validation results, although U-Net + CBAM requires further training for a fair comparison.
 
-![noraml U-net](./assets/U-net_results.png) 
+![normal U-net](./assets/U-net_results.png) 
 
 ![normal U-net iou](./assets/normal U-net_iou.png)
 
-![noraml U-net](./assets/U-net+CBAM.png)
+![normal U-net](./assets/U-net+CBAM.png)
 
 ![noraml U-net](./assets/CBAM_iou.png)
 
