@@ -6,7 +6,9 @@ This study enhances the classic **U-Net** by integrating:
 - **CBAM (Convolutional Block Attention Module)** — for better channel and spatial attention.
 - **Residual blocks** — for improved gradient flow and learning stability.
 
-Experiments on a **human clothing segmentation dataset** (59 classes, 1000 images) demonstrate consistent improvements in **loss**, **pixel accuracy**, and **IoU** compared to baseline U-Net models.
+Experiments on a human clothing segmentation dataset (59 classes, 1000 images) show that
+residual connections drive the largest improvements in loss and pixel accuracy, while CBAM
+contributes smaller, less consistent gains in validation IoU.
 
 ---
 
@@ -102,7 +104,18 @@ Five U-Net variants were created:
 ---
 ## Results
 #### Dataset 1 
+Across the five U-Net variants, training loss decreased steadily for all models, with the
+residual-based architectures (Residual U-Net, and Residual U-Net + CBAM) reaching noticeably
+lower training loss than their classic counterparts. Pixel accuracy and IoU on the validation
+set were considerably noisier across all variants, converging to a similar range regardless
+of whether CBAM was included. Residual U-Net + CBAM achieved the strongest training-set
+pixel accuracy and IoU among the five variants, but its validation IoU did not clearly
+separate from the other residual variants, indicating that most of the observed gain came
+from the residual connections rather than the attention module itself.
 
+![clothing_dataset_normal_Unet](./assets/CBAM_Unet_clothing_dataset.png)
+
+![clothing_dataset_CBAM_Unet](./assets/CBAM_Unet_clothing_dataset.png)
 
 #### Dataset 2 
 Both U-Net and U-Net + CBAM showed steady improvements during training, with decreasing loss and increasing PA and IoU. U-Net achieved a validation IoU of 60.07% after 30 epochs, while U-Net + CBAM reached a best validation IoU of 59.72% at epoch 17. Although U-Net + CBAM achieved a slightly higher training IoU (62.46% vs. 61.30%), U-Net showed more stable validation performance. Overall, U-Net performed slightly better on the available validation results, although U-Net + CBAM requires further training for a fair comparison.
@@ -119,17 +132,33 @@ Both U-Net and U-Net + CBAM showed steady improvements during training, with dec
 
 ## Conclusion and Future Work
 #### For Dataset 1 conducted experiments 
-- CBAM modules slightly improve segmentation performance.  
-- The attention mechanism enhances feature focus, with stronger benefits in deeper architectures.  
-- Future directions:
-  - Apply CBAM to **SegNet**, **DeepLabV3+**, and **SegFormer**.  
-  - Explore deeper models to further exploit attention-based feature refinement.
 
-**Findings:**
-- CBAM-augmented and residual models outperform baseline U-Net.
-- Best results achieved by **Residual U-Net with CBAM**, showing improved IoU and lower loss.
+- Residual connections were the primary driver of improved loss and pixel accuracy over
+  the classic U-Net.
+- CBAM's additional contribution on top of the residual architecture was smaller and
+  noisier on validation IoU, suggesting a more modest benefit than the architectural
+  change alone.
+- Best training-set results came from Residual U-Net + CBAM, though the CBAM-specific
+  gain on validation was not clearly separated from run-to-run noise.
+
+**Future directions:**
+- Apply CBAM to SegNet, DeepLabV3+, and SegFormer to test whether its benefit is more
+  pronounced in different architectures.
+- Run repeated trials to establish whether CBAM's validation IoU gain is statistically
+  meaningful or within noise.
 
 #### for Dataset 2 conducted experiments 
+
+U-Net slightly outperformed U-Net + CBAM on validation IoU (60.07% vs. 59.72%), despite
+CBAM reaching a higher training IoU (62.46% vs. 61.30%) — a sign of possible overfitting
+or that CBAM needs more training epochs before its benefit shows up on this dataset.
+
+#### Cross-Dataset Observation
+Across both datasets, residual connections consistently produced the largest gains, while
+CBAM's effect on validation metrics was smaller and less consistent than initially
+hypothesized — a useful negative result rather than a uniform win, and a reminder that
+attention modules don't automatically improve performance regardless of architecture.
+
 ---
 
 ## References
